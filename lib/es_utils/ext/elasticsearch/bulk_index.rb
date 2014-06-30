@@ -1,16 +1,18 @@
 module Elasticsearch
   module API
     module Actions
-      def bulk_index(params={})
-        body = params[:body].map do |raw|
-          {:index => {
-              :_index => params[:index],
-              :_type  => params[:type],
-              :data   => raw
-          }}
-        end
+      [:index, :update, :delete].each do |action|
+        define_method "bulk_#{action}" do |params={}|
+          body = params[:body].map do |raw|
+            {action => {
+                :_index => params[:index],
+                :_type  => params[:type],
+                :data   => raw
+            }}
+          end
 
-        bulk(params.merge(:body => body))
+          bulk(params.merge(:body => body))
+        end
       end
     end
   end
