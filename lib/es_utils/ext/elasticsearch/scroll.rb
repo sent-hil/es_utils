@@ -1,5 +1,3 @@
-require "pry"
-
 module Elasticsearch
   module API
     module Actions
