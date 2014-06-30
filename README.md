@@ -20,12 +20,37 @@ Or install it yourself as:
     # this requires `elasticsearch`, so you don't have to again
     require "es_utils"
 
-### Kibana
+### kibana
 
     # I find this time format `%FT%T%:z` or `2014-06-29T18:26:54-07:00`
     # to be best for kibana. This library monkepatches `Time` to add
     # `kibana` method.
     Time.now.kibana
+
+### scroll_each
+
+    # `A scrolled search allows us to do an initial search and to keep
+    # pulling batches of results from Elasticsearch until there are no
+    # more results left. It’s a bit like a cursor in a traditional database.`
+    #
+    # http://www.elasticsearch.org/guide/en/elasticsearch/guide/current/scan-scroll.html
+    #
+    # `scroll_each` abstracts away the bookkeeping logic. It takes `options` Hash
+    # and a block which is called on the results of each scroll.
+    client =  Elasticsearch::Client.new
+    options = {
+      :index       => <index_name>,    # required
+      :scroll      => "5m",            # optional
+      :size        => 10,              # optional
+      :body        => {:sort => "_id"} # optional
+    }
+
+    client.scroll_each options do |results|
+      results.each do |result|
+        # add your logic here
+        # example: puts result["_source"]
+      end
+    end
 
 ## Contributing
 
