@@ -1,9 +1,6 @@
 require_relative "../../../spec_helper"
 
 describe "Elasticsearach#scroll" do
-  let(:client) { Elasticsearch::Client.new }
-  let(:index_name) { "es_utils" }
-
   after { client.indices.delete(:index => index_name) }
 
   it "monkey patches `Elasticsearach` to add `scroll` method" do
@@ -18,10 +15,7 @@ describe "Elasticsearach#scroll" do
       }}
     end
 
-    client.bulk(:body => events)
-
-    # refresh so we can get the results right away
-    client.indices.refresh(:index => index_name)
+    client.bulk(:body => events, :refresh => true)
 
     options = {
       :index       => index_name,
