@@ -17,9 +17,7 @@ Or install it yourself as:
     $ gem install es_utils
 
 ## Api
-    require "elasticsearch"
-
-    # be sure to require only AFTER `elasticsearch` gem
+    # this requires `elasticsearch`, so you don't have to again
     require "es_utils"
 
 ### Kibana
