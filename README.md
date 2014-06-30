@@ -52,6 +52,13 @@ Or install it yourself as:
       end
     end
 
+### bulk_index
+
+    # `bulk_index` removes away need to pass index name and type as part
+    # of each document when doing a bulk indexing operation.
+    documents = [ {a: 1}, {a: 2}, {a: 3} ]
+    client.bulk_index(:index => "es_utils", :type => "doc", :refresh => true, :body => documents)
+
 ## Contributing
 
 1. Fork it
