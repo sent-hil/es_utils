@@ -5,4 +5,8 @@ class Time
   def kibana
     self.strftime("%FT%T%:z")
   end
+
+  def logstash
+    self.strftime("%Y.%m.%d")
+  end
 end
